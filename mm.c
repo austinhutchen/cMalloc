@@ -208,11 +208,11 @@ else { /* Case 4 */
     PUT(FTRP(NEXT_BLKP(bp)), PACK(size, 0));
     bp = PREV_BLKP(bp);
 }
-return bp;
+return bp;  
 }
 
 //fig 9.47
-void *mm_malloc(uint size)
+void *mm_malloc(uint32_t size)
 {
 size_t asize; /* Adjusted block size */
 size_t extendsize; /* Amount to extend heap if no fit */
