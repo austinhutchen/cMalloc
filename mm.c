@@ -90,6 +90,7 @@ static inline uint32_t GET_SIZE( void *p )  {
 }
 
 static inline int GET_ALLOC( void *p  ) {
+  // is header bit set?
   return GET(p) & 0x1;
 }
 
@@ -121,7 +122,7 @@ static inline void* PREV_BLKP(void *bp){
 //
 
 static char *heap_listp;  /* pointer to first block */  
-
+static char *last_block;
 //
 // function prototypes for internal helper routines
 //
@@ -144,7 +145,7 @@ PUT(heap_listp + (1*WSIZE), PACK(DSIZE, 1)); /* Prologue header */
 PUT(heap_listp + (2*WSIZE), PACK(DSIZE, 1)); /* Prologue footer */
 PUT(heap_listp + (3*WSIZE), PACK(0, 1)); /* Epilogue header */
 heap_listp += (2*WSIZE);
-
+last_block=heap_listp;
  /* Extend the empty heap with a free block of CHUNKSIZE bytes */
  if (extend_heap(CHUNKSIZE/WSIZE) == NULL)
      return -1;
@@ -208,6 +209,9 @@ else { /* Case 4 */
     PUT(FTRP(NEXT_BLKP(bp)), PACK(size, 0));
     bp = PREV_BLKP(bp);
 }
+if(last_block > (char *)bp && last_block < (char *)NEXT_BLKP(bp)){
+  last_block=bp;
+}
 return bp;  
 }
 
@@ -245,17 +249,28 @@ return NULL;
  //prob 9.8
 static void *find_fit(uint32_t asize)
 {
-/* First-fit search */
-void *bp;
+  char *og=last_block; // we dont need to go to the end, so just stop at the old last.
 
-for (bp = heap_listp; GET_SIZE(HDRP(bp)) > 0; bp = NEXT_BLKP(bp)) {
-    if (!GET_ALLOC(HDRP(bp)) && (asize <= GET_SIZE(HDRP(bp)))) {
-        return bp;
-        }
-    }
- return NULL; /* No fit */
- 
+  while(GET_SIZE(HDRP(last_block)) > 0){
+      if (!GET_ALLOC(HDRP(last_block)) && (asize <= GET_SIZE(HDRP(last_block)))) {
+          
+          return last_block;
+          }
+          last_block=NEXT_BLKP(last_block);
+  }
+
+    last_block=heap_listp; //set back to start so we can check the bottom of heap incase we dont find
+    while(last_block<og){
+      if (!GET_ALLOC(HDRP(last_block)) && (asize <= GET_SIZE(HDRP(last_block)))) {
+          
+          return last_block;
+          }
+          last_block=NEXT_BLKP(last_block);
+  }
+  return NULL; /* No fit */
+
  }
+ 
 
 // prob 9.9
 static void place(void *bp, uint32_t asize)
@@ -283,7 +298,6 @@ void *mm_realloc(void *ptr, uint32_t size)
 {
   void *newp;
   uint32_t copySize;
-
   newp = mm_malloc(size);
   if (newp == NULL) {
     printf("ERROR: mm_malloc failed in mm_realloc\n");
@@ -309,16 +323,13 @@ void mm_checkheap(int verbose)
   // and provide your own mm_checkheap
   //
   void *bp = heap_listp;
-  
   if (verbose) {
     printf("Heap (%p):\n", heap_listp);
   }
-
   if ((GET_SIZE(HDRP(heap_listp)) != DSIZE) || !GET_ALLOC(HDRP(heap_listp))) {
 	printf("Bad prologue header\n");
   }
   checkblock(heap_listp);
-
   for (bp = heap_listp; GET_SIZE(HDRP(bp)) > 0; bp = NEXT_BLKP(bp)) {
     if (verbose)  {
       printblock(bp);
@@ -357,6 +368,7 @@ static void printblock(void *bp)
 
 static void checkblock(void *bp) 
 {
+    
   if ((uintptr_t)bp % 8) {
     printf("Error: %p is not doubleword aligned\n", bp);
   }
