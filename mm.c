@@ -57,7 +57,7 @@ team_t team = {
 /////////////////////////////////////////////////////////////////////////////
 #define WSIZE       4       /* word size (bytes) */  
 #define DSIZE       8       /* doubleword size (bytes) */
-#define CHUNKSIZE  (1<<18)  /* initial heap size (bytes) */
+#define CHUNKSIZE  (1<<16)  /* initial heap size (bytes) */
 #define OVERHEAD    8       /* overhead of header and footer (bytes) */
 
 static inline int MAX(int x, int y) {
