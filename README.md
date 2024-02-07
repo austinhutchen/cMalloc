@@ -205,10 +205,6 @@ specific implementations as goals:
 <h1>The scores vary based on the fit policy (first, next, best) and strategies on coalescing. </h1>
 
 
-
-# Hints
-
-
 * **Use the `mdriver` `-f` option.**  During initial
 development, using tiny trace files will simplify debugging and
 testing. We have included two such trace files (`short{1,2-bal.rep}) that you can use for initial debugging.
