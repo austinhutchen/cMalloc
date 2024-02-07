@@ -149,12 +149,6 @@ More verbose output. Prints additional diagnostic information as each
 trace file is processed.  Useful during debugging for determining
 which trace file is causing your malloc package to fail.
 
-# Programming Rules
-
-* You should not change any of the interfaces in `mm.c`.
-* You should not invoke any memory-management related library
-calls or system calls.  This excludes the use of `malloc`, `calloc`, `free`, `realloc`, `sbrk`, `brk` or any
-variants of these calls in your code.
 
 * For consistency with the `libc` `malloc` package, which
 returns blocks aligned on 8-byte boundaries, *your allocator must
@@ -163,8 +157,7 @@ driver will enforce this requirement for you.
 
 
 # Evaluation
-
-You'll be evaluated by having a functioning `malloc`.  
+ 
 
 The driver program summarizes the performance of your
 allocator by computing a *performance index*, $P$, which is a
