@@ -9,7 +9,7 @@ functions, which are declared in `mm.h` and defined in
     void  mm_free(void *ptr);
     void *mm_realloc(void *ptr, size_t size);
 ```
-The `mm.c` file we have given you implements the simplest but
+The `mm.c` file implements the simplest but
 still functionally correct malloc package that we could think
 of. Using this as a starting place, modify these functions (and
 possibly define other private `static` functions), so that they
