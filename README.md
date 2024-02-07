@@ -196,7 +196,7 @@ you must achieve a balance between utilization and throughput.
 There is a scoring program, called `./grade-malloc.py` that will compile
 your program and run the test cases. This will report a grade.
 
-Your grade on the "does it work" portion of the machine problem
+Grading on the "does it work" portion of the machine problem
 is computed by the `grade-malloc.py` script using the reported grade.
 
 The scoring function is based on using the `https://coding.csel.io` machines and
@@ -209,19 +209,9 @@ specific implementations as goals:
 * Score ~100%, using ``multiple free'' lists
 * Score ~110%, is a ``tree based'' allocator
 
-The scores vary based on the fit policy (first, next, best) and strategies on coalescing.
+<h1>The scores vary based on the fit policy (first, next, best) and strategies on coalescing. </h1>
 
-You can earn up to 10\% extra credit based on the score (i.e. a maximum score of 110).
 
-# Handin Instructions
-
-You must commit your git repo containing a valid `mm.c`, `Makefile` and other files
-needed to automatically build your program. You labs will be run by the TA's
-on the evaluation machine and grades recorded using the grading script.
-
-*You must indicate the origin of any code your use or borrow from other
-people or sources. Failure to properly attribute the origin of code you
-retrieve from any source is grounds for receiving a zero.*
 
 # Hints
 
