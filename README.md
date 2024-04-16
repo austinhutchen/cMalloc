@@ -10,8 +10,8 @@ functions, which are declared in `mm.h` and defined in
     void *mm_realloc(void *ptr, size_t size);
 ```
 The `mm.c` file implements the simplest but
-still functionally correct malloc package that we could think
-of. Using this as a starting place, modify these functions (and
+still functionally correct malloc package that I could think
+of. Using this as a starting place, I modified these functions (and
 possibly define other private `static` functions), so that they
 obey the following semantics:
 
@@ -25,8 +25,7 @@ initialization, 0 otherwise.
 * `mm_malloc:` The `mm_malloc` routine returns a pointer
 to an allocated block payload of at least `size` bytes.  The
 entire allocated block should lie within the heap region and should
-not overlap with any other allocated chunk. We will comparing your implementation to the version of `malloc`
-supplied in the standard C library (`libc`). Since the 
+not overlap with any other allocated chunk. Since the 
 `libc` malloc always returns payload pointers that are 
 aligned to 8 bytes, your malloc implementation should do likewise
 and always return 8-byte aligned pointers.
